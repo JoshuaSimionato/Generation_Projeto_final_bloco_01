@@ -1,8 +1,20 @@
 import * as readlinesync from "readline-sync"
 import { colors } from "./src/util/Colors";
+import { Notebook } from "./src/model/Notebook";
+import { Celular } from "./src/model/Celular";
 
 export function main() {
     let menu: number;
+    let notebook, celular: string;
+
+    const not: Notebook = new Notebook(1, 'Samsung', 2, 4000, 'INTEL');
+    not.visualizar()
+
+
+    const cel: Celular = new Celular(2, 'apple', 1, 5000, 'IOS')
+    cel.visualizar()
+
+
 
     while (true) {
         console.log(colors.bg.black, colors.fg.blue, "*".repeat(35))
@@ -63,7 +75,7 @@ export function main() {
             case 0:
                 console.log("-=".repeat(30));
                 console.log(colors.fg.bluestrong,
-                    "\nA Farmácia JS te deseja um excelente dia ! \n\n", colors.reset);
+                    "\nA TechStore JS te deseja um excelente dia, preço baixo é aqui! \n\n", colors.reset);
                 sobre();
                 process.exit(0); // Saída do programa
 
