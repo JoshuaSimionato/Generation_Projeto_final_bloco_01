@@ -6,7 +6,7 @@ import { ProdutoController } from "./src/controller/ProdutoController";
 
 export function main() {
     let menu, tipo, preco, id: number;
-    let notebook, celular, nome, sistemaOperacional, processador : string;
+    let notebook, celular, nome : string;
     let tipoProduto = ['Celular', 'Notebook'];
 
 
@@ -14,10 +14,10 @@ export function main() {
     const produtoController: ProdutoController = new ProdutoController();
 
     produtoController.cadastrar(new Celular(produtoController.gerarId(),
-        "Apple", 1, 5000, "IOS"))
+        "IPHONE 14 PRO MAX", 1, 7000, "IOS"))
 
     produtoController.cadastrar(new Notebook(produtoController.gerarId(),
-        "Samsung", 2, 3800, "Intel"));
+        "Dell inspirion 5410", 2, 4800, "Intel"));
 
     ;
 
@@ -54,19 +54,19 @@ export function main() {
                 console.log(colors.fg.bluestrong,
                     "\nCadastrar Produto\n", colors.reset);
 
-                nome = readlinesync.question("Digite o Nome do Produto: ");
+                nome = readlinesync.question("\nDigite o Nome do Produto: ");
 
                 tipo = readlinesync.keyInSelect(tipoProduto, "", { cancel: false }) + 1;
 
-                preco = readlinesync.questionFloat("Digite o preco: ");
+                preco = readlinesync.questionFloat("\nDigite o preco: ");
 
                 switch (tipo) {
                     case 1:
-                        celular = readlinesync.question("Digite o Sistema Operacional do Celular: ");
+                        celular = readlinesync.question("\nDigite o Sistema Operacional do Celular: ");
                         produtoController.cadastrar(new Celular(produtoController.gerarId(), nome, tipo, preco, celular));
                         break;
                     case 2:
-                        notebook = readlinesync.question("Digite o Processador do Notebook: ");
+                        notebook = readlinesync.question("\nDigite o Processador do Notebook: ");
                         produtoController.cadastrar(new Notebook(produtoController.gerarId(), nome, tipo, preco, notebook));
                         break;
                 }
@@ -84,7 +84,7 @@ export function main() {
             case 3:
                 console.log(colors.fg.bluestrong,
                     "\nListar Produto por Id\n", colors.reset);
-                id = readlinesync.questionInt('Digite o Id do Produto: ');
+                id = readlinesync.questionInt('\nDigite o Id do Produto: ');
                 produtoController.procurarPorId(id);
 
                 keyPress()
@@ -94,45 +94,45 @@ export function main() {
                 console.log(colors.fg.whitestrong,
                     "\n\nAtualizar dados do Produto\n\n", colors.reset);
 
-                id = readlinesync.questionInt("Digite o Id do Produto: ");
+                id = readlinesync.questionInt("\nDigite o Id do Produto: ");
 
                 let produto = produtoController.buscarNoArray(id);
 
                 if (produto !== null) {
 
-                    nome = readlinesync.question("Digite o Nome do Produto: ");
+                    nome = readlinesync.question("\nDigite o Nome do Produto: ");
 
                     tipo = produto.tipo;
 
-                    preco = readlinesync.questionFloat("Digite o preco: (R$)");
+                    preco = readlinesync.questionFloat("\nDigite o preco: (R$)");
 
                     switch (tipo) {
                         case 1:
-                        celular = readlinesync.question("Digite o Sistema Operacional do Celular: ");
+                        celular = readlinesync.question("\nDigite o Sistema Operacional do Celular: ");
                         produtoController.atualizar(new Celular(id, nome, tipo, preco, celular));
                         break;
                     case 2:
-                        notebook = readlinesync.question("Digite o Processador do Notebook: ");
+                        notebook = readlinesync.question("\nDigite o Processador do Notebook: ");
                         produtoController.atualizar(new Notebook(id, nome, tipo, preco, notebook));
                         break;
                     }
 
                 } else
-                    console.log("Produto não Encontrado!");
+                    console.log("\nProduto não Encontrado!");
                 keyPress()
                 break;
 
             case 5:
                 console.log(colors.fg.bluestrong,
                     "\nDeletar Produto\n", colors.reset);
-                id = readlinesync.questionInt('Digite o Id do Produto: ');
+                id = readlinesync.questionInt('\nDigite o Id do Produto: ');
                 produtoController.deletar(id);
                 keyPress()
                 break;
 
             case 6:
                 console.log(colors.fg.bluestrong, "\nProcurar Produto por Nome\n", colors.reset); // Ajuste do case
-                nome = readlinesync.question("Digite o Nome do Produto: ");
+                nome = readlinesync.question("\nDigite o Nome do Produto: ");
                 produtoController.procurarPorNome(nome);
                 keyPress();
                 break;
