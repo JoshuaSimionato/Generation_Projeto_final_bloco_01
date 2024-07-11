@@ -75,5 +75,12 @@ export class ProdutoController implements ProdutoRepository{
         return null;
     }
 
+    calcularValorTotalEstoque(): number {
+        let valorTotal = 0;
+        for (let produto of this.listaProdutos) {
+            valorTotal += produto.preco;
+        }
+        return valorTotal;
+    }
     
 }

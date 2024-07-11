@@ -41,6 +41,8 @@ export function main() {
         console.log("|                                    |");
         console.log("|  [6] -> Procurar Produto por Nome  |");
         console.log("|                                    |");
+        console.log("|  [7] -> Calcular Valor do Estoque  |"); 
+        console.log("|                                    |");
         console.log("|  [0] -> Sair do Menu               |");
         console.log(` ************************************ `);
         console.log(colors.reset);
@@ -127,6 +129,7 @@ export function main() {
                 produtoController.deletar(id);
                 keyPress()
                 break;
+
             case 6:
                 console.log(colors.fg.bluestrong, "\nProcurar Produto por Nome\n", colors.reset); // Ajuste do case
                 nome = readlinesync.question("Digite o Nome do Produto: ");
@@ -134,6 +137,13 @@ export function main() {
                 keyPress();
                 break;
 
+            case 7:
+                console.log(colors.fg.bluestrong, "\nCalcular Valor Total do Estoque\n", colors.reset);
+                let valorTotal = produtoController.calcularValorTotalEstoque();
+                console.log(colors.fg.green, `\nO valor total do estoque é: R$ ${valorTotal.toFixed(2)}`, colors.reset);
+                keyPress();
+                break;
+                
             case 0:
                 console.log("-=".repeat(30));
                 console.log(colors.fg.bluestrong,
