@@ -143,7 +143,7 @@ export function main() {
                 console.log(colors.fg.green, `\nO valor total do estoque é: R$ ${valorTotal.toFixed(2)}`, colors.reset);
                 keyPress();
                 break;
-                
+    
             case 0:
                 console.log("-=".repeat(30));
                 console.log(colors.fg.bluestrong,
