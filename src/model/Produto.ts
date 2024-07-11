@@ -7,6 +7,7 @@ export abstract class Produto {    //Classe Mãe
     private _nome: string;
     private _tipo: number;
     private _preco: number;
+    produto: any;
 
     // Método Construtor da Classe Produto
 

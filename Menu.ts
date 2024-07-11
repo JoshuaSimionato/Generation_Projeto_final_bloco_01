@@ -2,17 +2,24 @@ import * as readlinesync from "readline-sync"
 import { colors } from "./src/util/Colors";
 import { Notebook } from "./src/model/Notebook";
 import { Celular } from "./src/model/Celular";
+import { ProdutoController } from "./src/controller/ProdutoController";
 
 export function main() {
-    let menu: number;
-    let notebook, celular: string;
-
-    const not: Notebook = new Notebook(1, 'Samsung', 2, 4000, 'INTEL');
-    not.visualizar()
+    let menu, tipo, preco, id: number;
+    let notebook, celular, nome, sistemaOperacional, processador : string;
+    let tipoProduto = ['Celular', 'Notebook'];
 
 
-    const cel: Celular = new Celular(2, 'apple', 1, 5000, 'IOS')
-    cel.visualizar()
+    // Objeto da Classe ProdutoController
+    const produtoController: ProdutoController = new ProdutoController();
+
+    produtoController.cadastrar(new Celular(produtoController.gerarId(),
+        "Apple", 1, 5000, "IOS"))
+
+    produtoController.cadastrar(new Notebook(produtoController.gerarId(),
+        "Samsung", 2, 3800, "Intel"));
+
+    ;
 
 
 
@@ -32,6 +39,8 @@ export function main() {
         console.log("|                                    |");
         console.log("|  [5] -> Deletar Produto            |");
         console.log("|                                    |");
+        console.log("|  [6] -> Procurar Produto por Nome  |");
+        console.log("|                                    |");
         console.log("|  [0] -> Sair do Menu               |");
         console.log(` ************************************ `);
         console.log(colors.reset);
@@ -42,34 +51,87 @@ export function main() {
             case 1:
                 console.log(colors.fg.bluestrong,
                     "\nCadastrar Produto\n", colors.reset);
-                
+
+                nome = readlinesync.question("Digite o Nome do Produto: ");
+
+                tipo = readlinesync.keyInSelect(tipoProduto, "", { cancel: false }) + 1;
+
+                preco = readlinesync.questionFloat("Digite o preco: ");
+
+                switch (tipo) {
+                    case 1:
+                        celular = readlinesync.question("Digite o Sistema Operacional do Celular: ");
+                        produtoController.cadastrar(new Celular(produtoController.gerarId(), nome, tipo, preco, celular));
+                        break;
+                    case 2:
+                        notebook = readlinesync.question("Digite o Processador do Notebook: ");
+                        produtoController.cadastrar(new Notebook(produtoController.gerarId(), nome, tipo, preco, notebook));
+                        break;
+                }
                 keyPress()
                 break;
 
             case 2:
                 console.log(colors.fg.bluestrong,
                     "\nListar Todos os Produtos\n", colors.reset);
+                produtoController.listarTodas();
+
                 keyPress()
                 break;
 
             case 3:
                 console.log(colors.fg.bluestrong,
                     "\nListar Produto por Id\n", colors.reset);
-            
+                id = readlinesync.questionInt('Digite o Id do Produto: ');
+                produtoController.procurarPorId(id);
+
                 keyPress()
                 break;
 
             case 4:
-                console.log(colors.fg.bluestrong,
-                    "\nAtualizar Produto\n", colors.reset);
+                console.log(colors.fg.whitestrong,
+                    "\n\nAtualizar dados do Produto\n\n", colors.reset);
 
+                id = readlinesync.questionInt("Digite o Id do Produto: ");
+
+                let produto = produtoController.buscarNoArray(id);
+
+                if (produto !== null) {
+
+                    nome = readlinesync.question("Digite o Nome do Produto: ");
+
+                    tipo = produto.tipo;
+
+                    preco = readlinesync.questionFloat("Digite o preco: (R$)");
+
+                    switch (tipo) {
+                        case 1:
+                        celular = readlinesync.question("Digite o Sistema Operacional do Celular: ");
+                        produtoController.atualizar(new Celular(id, nome, tipo, preco, celular));
+                        break;
+                    case 2:
+                        notebook = readlinesync.question("Digite o Processador do Notebook: ");
+                        produtoController.atualizar(new Notebook(id, nome, tipo, preco, notebook));
+                        break;
+                    }
+
+                } else
+                    console.log("Produto não Encontrado!");
                 keyPress()
                 break;
 
             case 5:
                 console.log(colors.fg.bluestrong,
                     "\nDeletar Produto\n", colors.reset);
+                id = readlinesync.questionInt('Digite o Id do Produto: ');
+                produtoController.deletar(id);
                 keyPress()
+                break;
+            case 6:
+                console.log(colors.fg.bluestrong, "\nProcurar Produto por Nome\n", colors.reset); // Ajuste do case
+                nome = readlinesync.question("Digite o Nome do Produto: ");
+                produtoController.procurarPorNome(nome);
+                keyPress();
                 break;
 
             case 0:
